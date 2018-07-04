@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3">
+                <h3><?php echo $email; ?></h3>
+                <br>
+                <a href="//localhost/myapp/profile">
+                    <img class="img-responsive" src="//localhost/myapp/img/placeholder.png" />
+                </a>
+            </div>
+            <div class="col-md-offset-1 col-md-8">
+                <h3>My Posts</h3>
+                <hr>
+                <?php if($this->flashSession->has('err')) :?>
+                    <div class="alert alert-danger">
+                        <?php echo $this->flashSession->output() ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($this->flashSession->has('succ')) :?>
+                    <div class="alert alert-success">
+                        <?php echo $this->flashSession->output() ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if(count($page) > 0) : ?>
+                <table class="table table-striped">
+                    <thead>
+                        <th>Posted by</th>
+                        <th>Content</th>
+                        <th>Created At</th>
+                        <th>Delete</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach($page->items as $item) : ?>
+                            <tr>
+                                <td><?php echo $item->email; ?></td>
+                                <td><?php echo $item->content; ?></td>
+                                <td><?php echo date('d/m/Y H:i', strtotime($item->created_at)); ?></td>
+                                <?php echo $this->tag->form('profile/deletemypost') ?>
+                                    <td><button class="btn btn-warning" name="post_id" value="<?php echo $item->id; ?>">Delete</button></td>
+                                </form>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <br>
+                <a href='//localhost/myapp/profile/myposts'>First</a>
+                <a href='//localhost/myapp/profile/myposts?page=<?= $page->before; ?>'>Previous</a>
+                <a href='//localhost/myapp/profile/myposts?page=<?= $page->next; ?>'>Next</a>
+                <a href='//localhost/myapp/profile/myposts?page=<?= $page->last; ?>'>Last</a>
+                <br><br>
+                <?php echo 'You are in page ', $page->current, ' of ', $page->total_pages; ?>
+                <?php else : ?>
+                    <h4>There are no posts for display.</h4>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>

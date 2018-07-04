@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3">
+                <h3><?php echo $email; ?></h3>
+                <br>
+                <a href="//localhost/myapp/profile">
+                    <img class="img-responsive" src="//localhost/myapp/img/placeholder.png" />
+                </a>
+            </div>
+            <div class="col-md-offset-1 col-md-8">
+                <h3>Create New Post</h3>
+                <hr>
+                <?php if($this->flashSession->has('err')) :?>
+                    <div class="alert alert-danger">
+                        <?php echo $this->flashSession->output() ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($this->flashSession->has('succ')) :?>
+                    <div class="alert alert-success">
+                        <?php echo $this->flashSession->output() ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php echo $this->tag->form('profile/savepost'); ?>
+                    <label>Insert Content *</label>
+                    <textarea class="form-control" name="content" placeholder="Enter post (min length 5 and max length 255 chars)"></textarea>
+                    <br>
+                    <label>Insert Email *</label>
+                    <input type="email" class="form-control" name="email" placeholder="Enter your registration email">
+                    <br><br>
+                    <button class="btn btn-success">Post It!</button>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>

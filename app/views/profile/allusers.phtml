@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3">
+                <h3><?php echo $email; ?></h3>
+                <br>
+                <a href="//localhost/myapp/profile">
+                    <img class="img-responsive" src="//localhost/myapp/img/placeholder.png" />
+                </a>
+            </div>
+            <div class="col-md-offset-1 col-md-8">
+                <h3>All Users</h3>
+                <hr>
+                <?php if($this->flashSession->has('err')) :?>
+                    <div class="alert alert-danger">
+                        <?php echo $this->flashSession->output() ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($this->flashSession->has('succ')) :?>
+                    <div class="alert alert-success">
+                        <?php echo $this->flashSession->output() ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if(count($users) > 0) : ?>
+                <table class="table table-striped">
+                    <thead>
+                        <th>User</th>
+                        <th>Follow</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach($users as $user) : ?>
+                            <?php if($user->email != $this->session->get('email')) : ?>
+                            <tr>
+                                <td><?php echo $user->email; ?></td>
+                                <?php foreach($followingIds as $followingId) : ?>
+                                    <?php if($followingId == $user->id) {
+                                            $i = 1;
+                                        }
+                                    ?>
+                                <?php endforeach; ?>
+                                <?php if($i != 1) : ?>
+                                    <td>
+                                        <?php echo $this->tag->form('profile/follow') ?>
+                                        <button type="submit" name="followbtn" class="btn btn-info" value="<?php echo $user->id; ?>">Follow</button>
+                                        </form>
+                                    </td>
+                                    <?php else : ?>
+                                    <td>
+                                        <?php echo $this->tag->form('profile/unfollow') ?>
+                                        <button type="submit" name="unfollowbtn" class="btn btn-warning" value="<?php echo $user->id; ?>">Unfollow</button>
+                                        </form>
+                                    </td>
+                                <?php endif; ?>
+                                <?php $i = 0; ?>
+                            </tr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php else : ?>
+                    <h4>There are no users for display.</h4>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
